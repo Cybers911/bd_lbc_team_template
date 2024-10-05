@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Pest Management</title>
+    <!-- Include Axios from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Include custom index.js -->
+    <script src="index.js" defer></script>
+</head>
+<body>
+<h1>Crop Pest Management System</h1>
+
+<!-- Section for selecting Corn or Wheat -->
+<h2>Select a Crop</h2>
+<label for="crop">Choose Crop:</label>
+<select id="crop">
+    <option value="corn">Corn</option>
+    <option value="wheat">Wheat</option>
+</select>
+<br><br>
+
+<!-- Input Fields for Pest Data -->
+<label for="pestId">Pest ID:</label>
+<input type="text" id="pestId" placeholder="Enter Pest ID"><br><br>
+
+<label for="pestName">Pest Name:</label>
+<input type="text" id="pestName" placeholder="Enter Pest Name"><br><br>
+
+<!-- Buttons for Corn Pest Operations -->
+<h3>Operations for Corn Pests</h3>
+<button id="get-corn-pests">Get Corn Pests</button>
+<button id="post-corn-pests">Add Corn Pest</button>
+<button id="put-corn-pests">Update Corn Pest</button>
+
+<!-- Buttons for Wheat Pest Operations -->
+<h3>Operations for Wheat Pests</h3>
+<button id="get-wheat-pests">Get Wheat Pests</button>
+<button id="post-wheat-pests">Add Wheat Pest</button>
+<button id="put-wheat-pests">Update Wheat Pest</button>
+
+<!-- Section to display the list of results -->
+<h2>Pests List:</h2>
+<ul id="result-list"></ul> <!-- Unordered list to display pest names -->
+
+<!-- Section to display any additional result or error messages -->
+<h2>Results/Errors:</h2>
+<pre id="resultDisplay"></pre>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+{
+  "apiEndpoints": {
+    "cornPests": {
+      "GET": {
+        "description": "Retrieve all corn pests or a specific pest by PestID",
+        "path": "/corn-pests",
+        "parameters": {
+          "pestId": {
+            "type": "String",
+            "required": false,
+            "description": "Unique identifier for the pest. If omitted, returns all pests."
+          }
+        }
+      },
+      "POST": {
+        "description": "Add a new corn pest",
+        "path": "/corn-pests",
+        "parameters": {
+          "pestId": {
+            "type": "String",
+            "required": true,
+            "description": "Unique identifier for the new pest."
+          },
+          "pestName": {
+            "type": "String",
+            "required": true,
+            "description": "Name of the new pest."
+          }
+        }
+      },
+      "PUT": {
+        "description": "Update an existing corn pest",
+        "path": "/corn-pests",
+        "parameters": {
+          "pestId": {
+            "type": "String",
+            "required": true,
+            "description": "Unique identifier for the pest to update."
+          },
+          "pestName": {
+            "type": "String",
+            "required": false,
+            "description": "Updated name of the pest."
+          }
+        }
+      }
+    },
+    "wheatPests": {
+      "GET": {
+        "description": "Retrieve all wheat pests or a specific pest by PestID",
+        "path": "/wheat-pests",
+        "parameters": {
+          "pestId": {
+            "type": "String",
+            "required": false,
+            "description": "Unique identifier for the pest. If omitted, returns all pests."
+          }
+        }
+      },
+      "POST": {
+        "description": "Add a new wheat pest",
+        "path": "/wheat-pests",
+        "parameters": {
+          "pestId": {
+            "type": "String",
+            "required": true,
+            "description": "Unique identifier for the new pest."
+          },
+          "pestName": {
+            "type": "String",
+            "required": true,
+            "description": "Name of the new pest."
+          }
+        }
+      },
+      "PUT": {
+        "description": "Update an existing wheat pest",
+        "path": "/wheat-pests",
+        "parameters": {
+          "pestId": {
+            "type": "String",
+            "required": true,
+            "description": "Unique identifier for the pest to update."
+          },
+          "pestName": {
+            "type": "String",
+            "required": false,
+            "description": "Updated name of the pest."
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "bd_lbc_team_template",
+  "version": "1.0.0",
+  "description": "Welcome to your Learn and Be Curious Project Repository! As you already know, Learn and Be Curious is a unique experience from your other sprints here at Bloomtech. The most significant difference is that instead of being given a partially built project with mastery tasks that you need to complete, you will be creating a project from scratch, putting it onto AWS, and presenting your work.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.7"
+  }
+}

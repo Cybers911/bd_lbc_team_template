@@ -1,0 +1,83 @@
+@startuml
+
+title Crop Pest Management System - Class and File Interaction
+
+package "Front-End (HTML + Axios)" {
+    class "HTML Page" {
+        +User input for pestId, pestName
+        +Buttons for GET, POST, PUT
+    }
+
+    class "Axios Library" {
+        +GET, POST, PUT Requests
+        +Sends JSON data to API Gateway
+        +Receives JSON from API Gateway
+    }
+
+    "HTML Page" --> "Axios Library" : Trigger HTTP Requests
+    "Axios Library" --> "API Gateway" : Sends HTTP Requests
+}
+
+package "API Gateway" {
+    class "API Gateway" {
+        +Routes requests to Lambda
+        +Endpoints for corn and wheat pests
+    }
+
+    "API Gateway" --> "CornPestsFunction" : Route /corn-pests
+    "API Gateway" --> "WheatPestsFunction" : Route /wheat-pests
+}
+
+package "Lambda Functions" {
+    class "CornPestsFunction" {
+        +handleRequest(Map<String, String> input)
+        +GET, POST, PUT for corn pests
+    }
+
+    class "WheatPestsFunction" {
+        +handleRequest(Map<String, String> input)
+        +GET, POST, PUT for wheat pests
+    }
+
+    "CornPestsFunction" --> "PestDAO" : Interacts with CornPests Table
+    "WheatPestsFunction" --> "PestDAO" : Interacts with WheatPests Table
+}
+
+package "Pest DAO (Java)" {
+    class "PestDAO" {
+        +getPest(String pestId)
+        +addPest(String pestId, String pestName)
+        +updatePest(String pestId, String pestName)
+    }
+
+    "PestDAO" --> "CornPests Table" : CRUD operations
+    "PestDAO" --> "WheatPests Table" : CRUD operations
+}
+
+package "DynamoDB Tables" {
+    class "CornPests Table" {
+        +PestID : String
+        +PestName : String
+    }
+
+    class "WheatPests Table" {
+        +PestID : String
+        +PestName : String
+    }
+}
+
+' Front-End Interaction
+HTML --> "Axios" : User actions
+
+' API Gateway Interaction
+"API Gateway" --> "Lambda Functions" : Routes requests based on paths
+
+' Lambda Functions Interaction
+"CornPestsFunction" --> "PestDAO" : Calls DAO methods
+"WheatPestsFunction" --> "PestDAO" : Calls DAO methods
+
+' DynamoDB Interaction
+"PestDAO" --> "CornPests Table" : Interacts with CornPests table
+"PestDAO" --> "WheatPests Table" : Interacts with WheatPests table
+
+@enduml
