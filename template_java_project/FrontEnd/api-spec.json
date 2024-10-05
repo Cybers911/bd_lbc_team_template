@@ -1,91 +1,336 @@
 {
-  "apiEndpoints": {
-    "cornPests": {
-      "GET": {
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Crop Pest Management API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/corn-pests": {
+      "get": {
         "description": "Retrieve all corn pests or a specific pest by PestID",
-        "path": "/corn-pests",
-        "parameters": {
-          "pestId": {
-            "type": "String",
+        "parameters": [
+          {
+            "name": "pestId",
+            "in": "query",
             "required": false,
-            "description": "Unique identifier for the pest. If omitted, returns all pests."
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier for the pest. If omitted, returns all pests.",
+            "example": "CORN001"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pest"
+                  }
+                },
+                "example": [
+                  {
+                    "pestId": "CORN001",
+                    "pestName": "Corn Earworm"
+                  },
+                  {
+                    "pestId": "CORN002",
+                    "pestName": "Fall Armyworm"
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": 500,
+                  "message": "Server Error"
+                }
+              }
+            }
           }
         }
       },
-      "POST": {
+      "post": {
         "description": "Add a new corn pest",
-        "path": "/corn-pests",
-        "parameters": {
-          "pestId": {
-            "type": "String",
-            "required": true,
-            "description": "Unique identifier for the new pest."
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pest"
+              },
+              "example": {
+                "pestId": "CORN003",
+                "pestName": "Corn Rootworm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Pest added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pest"
+                },
+                "example": {
+                  "pestId": "CORN003",
+                  "pestName": "Corn Rootworm"
+                }
+              }
+            }
           },
-          "pestName": {
-            "type": "String",
-            "required": true,
-            "description": "Name of the new pest."
+          "400": {
+            "description": "Invalid Inputs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": 400,
+                  "message": "Invalid Inputs"
+                }
+              }
+            }
           }
         }
       },
-      "PUT": {
+      "put": {
         "description": "Update an existing corn pest",
-        "path": "/corn-pests",
-        "parameters": {
-          "pestId": {
-            "type": "String",
-            "required": true,
-            "description": "Unique identifier for the pest to update."
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pest"
+              },
+              "example": {
+                "pestId": "CORN001",
+                "pestName": "Updated Corn Earworm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pest updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pest"
+                },
+                "example": {
+                  "pestId": "CORN001",
+                  "pestName": "Updated Corn Earworm"
+                }
+              }
+            }
           },
-          "pestName": {
-            "type": "String",
-            "required": false,
-            "description": "Updated name of the pest."
+          "400": {
+            "description": "Invalid Inputs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": 400,
+                  "message": "Invalid Inputs"
+                }
+              }
+            }
           }
         }
       }
     },
-    "wheatPests": {
-      "GET": {
+    "/wheat-pests": {
+      "get": {
         "description": "Retrieve all wheat pests or a specific pest by PestID",
-        "path": "/wheat-pests",
-        "parameters": {
-          "pestId": {
-            "type": "String",
+        "parameters": [
+          {
+            "name": "pestId",
+            "in": "query",
             "required": false,
-            "description": "Unique identifier for the pest. If omitted, returns all pests."
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier for the pest. If omitted, returns all pests.",
+            "example": "WHEAT001"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pest"
+                  }
+                },
+                "example": [
+                  {
+                    "pestId": "WHEAT001",
+                    "pestName": "Hessian Fly"
+                  },
+                  {
+                    "pestId": "WHEAT002",
+                    "pestName": "Russian Wheat Aphid"
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": 500,
+                  "message": "Server Error"
+                }
+              }
+            }
           }
         }
       },
-      "POST": {
+      "post": {
         "description": "Add a new wheat pest",
-        "path": "/wheat-pests",
-        "parameters": {
-          "pestId": {
-            "type": "String",
-            "required": true,
-            "description": "Unique identifier for the new pest."
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pest"
+              },
+              "example": {
+                "pestId": "WHEAT003",
+                "pestName": "Wheat Stem Sawfly"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Pest added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pest"
+                },
+                "example": {
+                  "pestId": "WHEAT003",
+                  "pestName": "Wheat Stem Sawfly"
+                }
+              }
+            }
           },
-          "pestName": {
-            "type": "String",
-            "required": true,
-            "description": "Name of the new pest."
+          "400": {
+            "description": "Invalid Inputs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": 400,
+                  "message": "Invalid Inputs"
+                }
+              }
+            }
           }
         }
       },
-      "PUT": {
+      "put": {
         "description": "Update an existing wheat pest",
-        "path": "/wheat-pests",
-        "parameters": {
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pest"
+              },
+              "example": {
+                "pestId": "WHEAT001",
+                "pestName": "Updated Hessian Fly"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pest updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pest"
+                },
+                "example": {
+                  "pestId": "WHEAT001",
+                  "pestName": "Updated Hessian Fly"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Inputs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": 400,
+                  "message": "Invalid Inputs"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Pest": {
+        "type": "object",
+        "properties": {
           "pestId": {
-            "type": "String",
-            "required": true,
-            "description": "Unique identifier for the pest to update."
+            "type": "string"
           },
           "pestName": {
-            "type": "String",
-            "required": false,
-            "description": "Updated name of the pest."
+            "type": "string"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
           }
         }
       }
