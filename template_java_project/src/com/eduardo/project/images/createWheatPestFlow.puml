@@ -1,0 +1,25 @@
+@startuml
+actor User as Client
+boundary WebUI as Frontend
+control JSController as JS
+control APIGateway as API
+control LambdaHandler as Lambda
+entity CreateWheatPestActivity as CreateActivity
+entity WheatPestDAO as DAO
+database DynamoDB
+
+Client -> Frontend : Click "Add Wheat Pest"
+Frontend -> JS : Trigger Add Wheat Pest
+JS -> API : Sends POST Request (e.g., /wheat-pests)
+API -> Lambda : Passes Create Request to Lambda function
+Lambda -> CreateActivity : Invokes CreateWheatPestActivity
+CreateActivity -> DAO : Save new WheatPest to DynamoDB
+DAO -> DynamoDB : Write to DynamoDB
+DynamoDB -> DAO : Confirmation of write
+DAO -> CreateActivity : Returns success message
+CreateActivity -> Lambda : Passes success message
+Lambda -> API : Sends response back to JS
+API -> JS : JavaScript receives success response
+JS -> Frontend : Updates the UI
+@enduml
+

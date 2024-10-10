@@ -1,0 +1,24 @@
+@startuml
+actor User as Client
+boundary WebUI as Frontend
+control JSController as JS
+control APIGateway as API
+control LambdaHandler as Lambda
+entity ActivityHandler as Activity
+entity DAO as DynamoDBDAO
+database DynamoDB
+
+Client -> Frontend : Interacts with UI (e.g., clicks button)
+Frontend -> JS : Triggers JavaScript events (Axios requests)
+JS -> API : Sends HTTP Request (e.g., /wheat-pests)
+API -> Lambda : Passes Request to Lambda function
+Lambda -> Activity : Invokes corresponding activity (Get, Create, Update)
+Activity -> DAO : DAO retrieves/stores data
+DAO -> DynamoDB : Performs DynamoDB operations
+DynamoDB -> DAO : Returns data to DAO
+DAO -> Activity : Returns result (success/error)
+Activity -> Lambda : Returns result to Lambda
+Lambda -> API : Returns HTTP response
+API -> JS : Passes result to JavaScript
+JS -> Frontend : Updates the UI with result
+@enduml
