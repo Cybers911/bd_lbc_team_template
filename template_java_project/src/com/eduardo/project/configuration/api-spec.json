@@ -1,0 +1,115 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Crop Pest Management API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/corn-pests": {
+      "get": {
+        "description": "Retrieve all corn pests",
+        "responses": {
+          "200": {
+            "description": "A list of corn pests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/CornPest" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Create a new corn pest",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CornPest" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Corn pest created" }
+        }
+      },
+      "put": {
+        "description": "Update an existing corn pest",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CornPest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Corn pest updated" }
+        }
+      }
+    },
+    "/wheat-pests": {
+      "get": {
+        "description": "Retrieve all wheat pests",
+        "responses": {
+          "200": {
+            "description": "A list of wheat pests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/WheatPest" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Create a new wheat pest",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/WheatPest" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Wheat pest created" }
+        }
+      },
+      "put": {
+        "description": "Update an existing wheat pest",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/WheatPest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Wheat pest updated" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CornPest": {
+        "type": "object",
+        "properties": {
+          "pestId": { "type": "string" },
+          "pestName": { "type": "string" }
+        }
+      },
+      "WheatPest": {
+        "type": "object",
+        "properties": {
+          "pestId": { "type": "string" },
+          "pestName": { "type": "string" }
+        }
+      }
+    }
+  }
+}
