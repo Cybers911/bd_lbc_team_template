@@ -1,24 +1,117 @@
 @startuml
-actor User as Client
-boundary WebUI as Frontend
-control JSController as JS
-control APIGateway as API
-control LambdaHandler as Lambda
-entity ActivityHandler as Activity
-entity DAO as DynamoDBDAO
-database DynamoDB
+title Key Methods - Data Flow from Client to Backend and Back
 
-Client -> Frontend : Interacts with UI (e.g., clicks button)
-Frontend -> JS : Triggers JavaScript events (Axios requests)
-JS -> API : Sends HTTP Request (e.g., /wheat-pests)
-API -> Lambda : Passes Request to Lambda function
-Lambda -> Activity : Invokes corresponding activity (Get, Create, Update)
-Activity -> DAO : DAO retrieves/stores data
-DAO -> DynamoDB : Performs DynamoDB operations
-DynamoDB -> DAO : Returns data to DAO
-DAO -> Activity : Returns result (success/error)
-Activity -> Lambda : Returns result to Lambda
-Lambda -> API : Returns HTTP response
-API -> JS : Passes result to JavaScript
-JS -> Frontend : Updates the UI with result
+package "Frontend" {
+    class index.html {
+        +<button> Select a Crop
+        +<button> Get Corn Pests
+        +<button> Add Corn Pest
+        +<button> Update Corn Pest
+        +<button> Get Wheat Pests
+        +<button> Add Wheat Pest
+        +<button> Update Wheat Pest
+    }
+
+    class index.js {
+        +getCornPests()
+        +addCornPest(pestData)
+        +updateCornPest(pestData)
+        +getWheatPests()
+        +addWheatPest(pestData)
+        +updateWheatPest(pestData)
+    }
+}
+
+package "Lambda Handlers" {
+    class GetCornPestsActivityProvider {
+        +handleRequest(GetCornPestsRequest request, Context context)
+    }
+
+    class CreateCornPestActivityProvider {
+        +handleRequest(CreateCornPestRequest request, Context context)
+    }
+
+    class UpdateCornPestActivityProvider {
+        +handleRequest(UpdateCornPestRequest request, Context context)
+    }
+
+    class GetWheatPestsActivityProvider {
+        +handleRequest(GetWheatPestsRequest request, Context context)
+    }
+
+    class CreateWheatPestActivityProvider {
+        +handleRequest(CreateWheatPestRequest request, Context context)
+    }
+
+    class UpdateWheatPestActivityProvider {
+        +handleRequest(UpdateWheatPestRequest request, Context context)
+    }
+}
+
+package "Activity Layer" {
+    class GetCornPestsActivity {
+        +handleRequest(GetCornPestsRequest request)
+    }
+
+    class CreateCornPestActivity {
+        +handleRequest(CreateCornPestRequest request)
+    }
+
+    class UpdateCornPestActivity {
+        +handleRequest(UpdateCornPestRequest request)
+    }
+
+    class GetWheatPestsActivity {
+        +handleRequest(GetWheatPestsRequest request)
+    }
+
+    class CreateWheatPestActivity {
+        +handleRequest(CreateWheatPestRequest request)
+    }
+
+    class UpdateWheatPestActivity {
+        +handleRequest(UpdateWheatPestRequest request)
+    }
+}
+
+package "DAO Layer" {
+    class CornPestDAO {
+        +saveCornPest(CornPest cornPest)
+        +getAllCornPests()
+        +updateCornPest(CornPest cornPest)
+    }
+
+    class WheatPestDAO {
+        +saveWheatPest(WheatPest wheatPest)
+        +getAllWheatPests()
+        +updateWheatPest(WheatPest wheatPest)
+    }
+}
+
+Frontend -> index.js: User interacts with UI
+index.js -> GetCornPestsActivityProvider: getCornPests()
+index.js -> CreateCornPestActivityProvider: addCornPest(pestData)
+index.js -> UpdateCornPestActivityProvider: updateCornPest(pestData)
+
+index.js -> GetWheatPestsActivityProvider: getWheatPests()
+index.js -> CreateWheatPestActivityProvider: addWheatPest(pestData)
+index.js -> UpdateWheatPestActivityProvider: updateWheatPest(pestData)
+
+GetCornPestsActivityProvider -> GetCornPestsActivity: handleRequest(GetCornPestsRequest)
+CreateCornPestActivityProvider -> CreateCornPestActivity: handleRequest(CreateCornPestRequest)
+UpdateCornPestActivityProvider -> UpdateCornPestActivity: handleRequest(UpdateCornPestRequest)
+
+GetWheatPestsActivityProvider -> GetWheatPestsActivity: handleRequest(GetWheatPestsRequest)
+CreateWheatPestActivityProvider -> CreateWheatPestActivity: handleRequest(CreateWheatPestRequest)
+UpdateWheatPestActivityProvider -> UpdateWheatPestActivity: handleRequest(UpdateWheatPestRequest)
+
+GetCornPestsActivity -> CornPestDAO: getAllCornPests()
+CreateCornPestActivity -> CornPestDAO: saveCornPest(cornPest)
+UpdateCornPestActivity -> CornPestDAO: updateCornPest(cornPest)
+
+GetWheatPestsActivity -> WheatPestDAO: getAllWheatPests()
+CreateWheatPestActivity -> WheatPestDAO: saveWheatPest(wheatPest)
+UpdateWheatPestActivity -> WheatPestDAO: updateWheatPest(wheatPest)
+
 @enduml
+

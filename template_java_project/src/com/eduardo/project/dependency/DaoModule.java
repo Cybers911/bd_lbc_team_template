@@ -1,8 +1,9 @@
 package com.eduardo.project.dependency;
 
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.eduardo.project.dynamoDB.DynamoDbClientProvider;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazon.ata.aws.dynamodb.DynamoDbClientProvider;
 import com.eduardo.project.dynamoDB.CornPestDAO;
 import com.eduardo.project.dynamoDB.WheatPestDAO;
 
@@ -25,6 +26,7 @@ public class DaoModule {
     public CornPestDAO provideCornPestDAO(DynamoDBMapper dynamoDBMapper) {
         return new CornPestDAO(dynamoDBMapper);
     }
+
 
     @Singleton
     @Provides

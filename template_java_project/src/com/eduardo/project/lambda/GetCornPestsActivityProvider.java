@@ -5,6 +5,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.eduardo.project.dependency.DaggerServiceComponent;
 import com.eduardo.project.dependency.ServiceComponent;
 import com.eduardo.project.models.requests.GetCornPestsRequest;
+import com.eduardo.project.models.results.GetCornPestsResult;
 
 public class GetCornPestsActivityProvider implements RequestHandler<GetCornPestsRequest, GetCornPestsResult> {
 
@@ -25,3 +26,4 @@ public class GetCornPestsActivityProvider implements RequestHandler<GetCornPests
         return app;
     }
 }
+

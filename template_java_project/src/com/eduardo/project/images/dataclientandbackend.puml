@@ -1,0 +1,109 @@
+@startuml
+title General Data Flow from Client to Backend and Back
+
+actor "User" as user
+
+package "Frontend" {
+    [index.html] as html
+    [index.js] as js
+}
+
+package "API Gateway" {
+    [Lambda Endpoints]
+}
+
+package "Lambda Handlers" {
+    [GetCornPestsActivityProvider] as getCorn
+    [CreateCornPestActivityProvider] as createCorn
+    [UpdateCornPestActivityProvider] as updateCorn
+    [GetWheatPestsActivityProvider] as getWheat
+    [CreateWheatPestActivityProvider] as createWheat
+    [UpdateWheatPestActivityProvider] as updateWheat
+}
+
+package "Activity Layer" {
+    [GetCornPestsActivity] as getCornActivity
+    [CreateCornPestActivity] as createCornActivity
+    [UpdateCornPestActivity] as updateCornActivity
+    [GetWheatPestsActivity] as getWheatActivity
+    [CreateWheatPestActivity] as createWheatActivity
+    [UpdateWheatPestActivity] as updateWheatActivity
+}
+
+package "DAO Layer" {
+    [CornPestDAO] as cornDAO
+    [WheatPestDAO] as wheatDAO
+}
+
+package "DynamoDB" {
+    [CornPests Table] as cornTable
+    [WheatPests Table] as wheatTable
+}
+
+user -> html: Interacts with UI
+html -> js: Sends Request
+
+js -> "Lambda Endpoints": Sends HTTP Request
+
+"Lambda Endpoints" --> getCorn: Route to Get Corn Pests
+"Lambda Endpoints" --> createCorn: Route to Create Corn Pest
+"Lambda Endpoints" --> updateCorn: Route to Update Corn Pest
+
+"Lambda Endpoints" --> getWheat: Route to Get Wheat Pests
+"Lambda Endpoints" --> createWheat: Route to Create Wheat Pest
+"Lambda Endpoints" --> updateWheat: Route to Update Wheat Pest
+
+getCorn --> getCornActivity: Handle Request
+createCorn --> createCornActivity: Handle Request
+updateCorn --> updateCornActivity: Handle Request
+
+getWheat --> getWheatActivity: Handle Request
+createWheat --> createWheatActivity: Handle Request
+updateWheat --> updateWheatActivity: Handle Request
+
+getCornActivity --> cornDAO: Get All Corn Pests
+cornDAO --> cornTable: Query Corn Pests Table
+cornTable --> cornDAO: Return Corn Pests
+cornDAO --> getCornActivity: Return Corn Pests
+getCornActivity --> getCorn: Return Result
+getCorn --> js: Return Response
+
+createCornActivity --> cornDAO: Save Corn Pest
+cornDAO --> cornTable: Insert Corn Pest
+cornTable --> cornDAO: Save Confirmation
+cornDAO --> createCornActivity: Return Confirmation
+createCornActivity --> createCorn: Return Result
+createCorn --> js: Return Response
+
+updateCornActivity --> cornDAO: Update Corn Pest
+cornDAO --> cornTable: Update Corn Pest
+cornTable --> cornDAO: Update Confirmation
+cornDAO --> updateCornActivity: Return Confirmation
+updateCornActivity --> updateCorn: Return Result
+updateCorn --> js: Return Response
+
+getWheatActivity --> wheatDAO: Get All Wheat Pests
+wheatDAO --> wheatTable: Query Wheat Pests Table
+wheatTable --> wheatDAO: Return Wheat Pests
+wheatDAO --> getWheatActivity: Return Wheat Pests
+getWheatActivity --> getWheat: Return Result
+getWheat --> js: Return Response
+
+createWheatActivity --> wheatDAO: Save Wheat Pest
+wheatDAO --> wheatTable: Insert Wheat Pest
+wheatTable --> wheatDAO: Save Confirmation
+wheatDAO --> createWheatActivity: Return Confirmation
+createWheatActivity --> createWheat: Return Result
+createWheat --> js: Return Response
+
+updateWheatActivity --> wheatDAO: Update Wheat Pest
+wheatDAO --> wheatTable: Update Wheat Pest
+wheatTable --> wheatDAO: Update Confirmation
+wheatDAO --> updateWheatActivity: Return Confirmation
+updateWheatActivity --> updateWheat: Return Result
+updateWheat --> js: Return Response
+
+js -> html: Update UI with Response Data
+
+@enduml
+

@@ -1,6 +1,7 @@
 package com.eduardo.project.dynamoDB;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.eduardo.project.exceptions.PestNotFoundException;
 import com.eduardo.project.models.WheatPest;
 

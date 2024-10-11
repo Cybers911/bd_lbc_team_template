@@ -1,13 +1,16 @@
 package com.eduardo.project.dynamoDB;
 
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.eduardo.project.exceptions.PestNotFoundException;
 import com.eduardo.project.models.CornPest;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+
 
 import javax.inject.Inject;
 import java.util.List;
 
-public class CornPestDAO {
+public class                                                                                                                                                                                                                                                            CornPestDAO {
 
     private final DynamoDBMapper dynamoDbMapper;
 
@@ -26,10 +29,8 @@ public class CornPestDAO {
 
     public List<CornPest> getAllPests() {
         // Implementation to scan all pests from the DynamoDB table
-
-        // Example implementation using DynamoDBMapper's scan operation
-        return dynamoDbMapper.scan(CornPest.class).getItems();
-
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+        return dynamoDbMapper.scan(CornPest.class, scanExpression).getItems();
     }
 
 
