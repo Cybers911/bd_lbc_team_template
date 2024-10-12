@@ -1,0 +1,36 @@
+@startuml
+title Sequence Diagram: Create Wheat Pest
+
+actor "User" as user
+
+participant "index.html" as html
+participant "index.js" as js
+participant "Lambda Endpoints" as lambdaAPI
+participant "CreateWheatPestActivityProvider" as createWheatProvider
+participant "CreateWheatPestActivity" as createWheatActivity
+participant "WheatPestDAO" as wheatDAO
+database "DynamoDB" as dynamoDB
+
+user -> html: Click "Add Wheat Pest" button
+html -> js: Trigger addWheatPest(pestData)
+js -> lambdaAPI: HTTP POST /wheat-pests (pestData)
+
+lambdaAPI -> createWheatProvider: Route to CreateWheatPestActivityProvider
+
+createWheatProvider -> createWheatActivity: handleRequest(pestData)
+
+createWheatActivity -> wheatDAO: Save Wheat Pest (pestData)
+
+wheatDAO -> dynamoDB: Insert wheat pest into WheatPests Table
+dynamoDB --> wheatDAO: Save Confirmation
+
+wheatDAO --> createWheatActivity: Return Confirmation
+createWheatActivity --> createWheatProvider: Return Confirmation
+
+createWheatProvider --> lambdaAPI: Return HTTP Response
+lambdaAPI --> js: Response with Confirmation
+
+js -> html: Update UI with Success Message
+
+@enduml
+

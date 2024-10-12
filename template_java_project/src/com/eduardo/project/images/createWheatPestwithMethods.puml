@@ -1,0 +1,89 @@
+@startuml
+title Sequence Diagram: Create Wheat Pest with All Methods
+
+actor "User" as user
+
+participant "index.html" as html
+participant "index.js" as js
+participant "Axios" as axios
+participant "API Gateway" as apiGateway
+participant "CreateWheatPestActivityProvider" as createWheatProvider
+participant "DaggerServiceComponent" as daggerComponent
+participant "CreateWheatPestActivity" as createWheatActivity
+participant "ModelConverter" as modelConverter
+participant "WheatPest" as wheatPest
+participant "WheatPestDAO" as wheatDAO
+participant "ModuleDAO" as moduleDAO
+participant "DynamoDBMapper" as dynamoDBMapper
+database "DynamoDB" as dynamoDB
+participant "CreateWheatPestResult" as createWheatPestResult
+
+== User Interaction ==
+user -> html: Click "Add Wheat Pest" button
+html -> js: onClickAddWheatPest()
+
+== Frontend Processing ==
+js -> js: collectPestData()
+js -> axios: axios.post('/wheat-pests', pestData)
+activate axios
+
+== API Gateway Routing ==
+axios -> apiGateway: HTTP POST /wheat-pests (pestData)
+activate apiGateway
+apiGateway -> createWheatProvider: Invoke Lambda Function
+deactivate apiGateway
+
+== Lambda Provider ==
+activate createWheatProvider
+createWheatProvider -> daggerComponent: getApp()
+daggerComponent -> moduleDAO: provideWheatPestDAO()
+activate moduleDAO
+moduleDAO --> daggerComponent: Return WheatPestDAO
+deactivate moduleDAO
+
+createWheatProvider -> createWheatActivity: handleRequest(CreateWheatPestRequest request, Context context)
+activate createWheatActivity
+
+== Activity Layer ==
+createWheatActivity -> createWheatActivity: validateRequest(request)
+createWheatActivity -> modelConverter: toWheatPest(request)
+activate modelConverter
+
+== Model Conversion ==
+modelConverter -> wheatPest: new WheatPest(pestId, pestName)
+activate wheatPest
+wheatPest --> modelConverter: WheatPest object
+deactivate wheatPest
+deactivate modelConverter
+
+== DAO Interaction ==
+createWheatActivity -> wheatDAO: saveWheatPest(WheatPest pest)
+activate wheatDAO
+wheatDAO -> dynamoDBMapper: save(pest)
+activate dynamoDBMapper
+
+== DynamoDB Interaction ==
+dynamoDBMapper -> dynamoDB: PutItem (pest data)
+dynamoDB --> dynamoDBMapper: Save Confirmation
+deactivate dynamoDBMapper
+deactivate wheatDAO
+
+== Build Response ==
+createWheatActivity -> createWheatPestResult: new CreateWheatPestResult(successMessage)
+activate createWheatPestResult
+createWheatPestResult --> createWheatActivity: Return CreateWheatPestResult
+deactivate createWheatPestResult
+deactivate createWheatActivity
+
+== Return Response ==
+createWheatProvider --> apiGateway: Return HTTP Response
+apiGateway --> axios: HTTP Response
+deactivate createWheatProvider
+deactivate axios
+
+== Update UI ==
+axios --> js: Response Data
+js -> js: processResponse()
+js -> html: updateUIWithSuccessMessage()
+
+@enduml
