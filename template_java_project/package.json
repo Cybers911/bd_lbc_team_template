@@ -10,5 +10,8 @@
     "type": "git",
     "url": "https://github.com/Cybers911/bd_lbc_team_template.git"
   },
-  "private": true
+  "private": true,
+  "dependencies": {
+    "express": "^4.21.1"
+  }
 }

@@ -7,6 +7,7 @@ import com.eduardo.project.dependency.ServiceComponent;
 import com.eduardo.project.models.requests.CreateWheatPestRequest;
 import com.eduardo.project.models.results.CreateWheatPestResult;
 
+
 public class CreateWheatPestActivityProvider implements RequestHandler<CreateWheatPestRequest, CreateWheatPestResult> {
 
     private static ServiceComponent app;
