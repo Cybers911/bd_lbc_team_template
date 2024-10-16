@@ -1,5 +1,6 @@
 package com.eduardo.project.dependency;
 
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.eduardo.project.dynamoDB.DynamoDbClientProvider;
 import com.amazonaws.regions.Regions;
@@ -18,7 +19,12 @@ public class DaoModule {
     @Singleton
     @Provides
     public DynamoDBMapper provideDynamoDBMapper() {
-        return new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_WEST_2));
+        AmazonDynamoDB amazonDynamoDBClient = AmazonDynamoDBClientBuilder.standard()
+                .withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
+                .withRegion(Regions.US_WEST_2)
+                .build();
+
+        return new DynamoDBMapper(amazonDynamoDBClient);
     }
 
     @Singleton

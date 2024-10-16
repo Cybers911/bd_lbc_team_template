@@ -28,9 +28,9 @@ public class                                                                    
     }
 
     public List<CornPest> getAllPests() {
-        // Implementation to scan all pests from the DynamoDB table
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
-        return dynamoDbMapper.scan(CornPest.class, scanExpression).getItems();
+        List<CornPest> pests = dynamoDbMapper.scan(CornPest.class, scanExpression);
+        return pests;
     }
 
 
