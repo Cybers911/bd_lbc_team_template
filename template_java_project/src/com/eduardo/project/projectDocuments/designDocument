@@ -4,10 +4,10 @@
 The Crop Pest Management System is designed to help farmers and agricultural professionals monitor and manage pest infestations for two crops: corn and wheat. The main goal is to provide a system where users can easily add, update, and view pests associated with each crop via a web interface, backed by an AWS serverless architecture. This system will enhance agricultural productivity by helping users manage pests more effectively, leading to better crop protection and improved yields.
 2. Top Questions to Resolve in Review
 
-   How can we ensure that the system handles scalability as more crops or pests are added in the future?
-   Should we add any user authentication for specific roles, such as admin or general user, to manage pest data?
-   How do we handle errors such as invalid data submissions (e.g., incorrect pest names or IDs) within the UI and backend?
-   What security measures (e.g., API key validation) should be implemented in the AWS API Gateway?
+    How can we ensure that the system handles scalability as more crops or pests are added in the future?
+    Should we add any user authentication for specific roles, such as admin or general user, to manage pest data?
+    How do we handle errors such as invalid data submissions (e.g., incorrect pest names or IDs) within the UI and backend?
+    What security measures (e.g., API key validation) should be implemented in the AWS API Gateway?
 
 3. Use Cases
 
@@ -19,12 +19,12 @@ U3. As a user, I want to update information about a pest (e.g., name, descriptio
 
 U4. As a user, I want to view a list of pests from either corn or wheat categories to stay informed about potential threats.
 4. Project Scope
-   4.1. In Scope
+4.1. In Scope
 
-   Implementing APIs to add, update, and retrieve pests for both corn and wheat.
-   Building a serverless backend using AWS Lambda to process requests and interact with DynamoDB.
-   Creating a frontend web interface where users can manage pests.
-   Setting up DynamoDB tables to store pest data for both corn and wheat crops.
+    Implementing APIs to add, update, and retrieve pests for both corn and wheat.
+    Building a serverless backend using AWS Lambda to process requests and interact with DynamoDB.
+    Creating a frontend web interface where users can manage pests.
+    Setting up DynamoDB tables to store pest data for both corn and wheat crops.
 
 4.2. Out of Scope
 
@@ -52,10 +52,10 @@ Why this architecture?
     DynamoDB allows fast retrieval of pest data with flexible schema design.
 
 6. API
-   6.1 Public Models
+6.1 Public Models
 
-   CornPestModel: { pestId: String, pestName: String }
-   WheatPestModel: { pestId: String, pestName: String }
+    CornPestModel: { pestId: String, pestName: String }
+    WheatPestModel: { pestId: String, pestName: String }
 
 6.2 First Endpoint: Create Corn Pest
 
@@ -90,15 +90,15 @@ Response:
 
 7. Tables
 
-   CornPests:
-   Partition Key: pestId (String)
-   Attributes: pestName (String)
-   Stores corn-related pests.
+    CornPests:
+        Partition Key: pestId (String)
+        Attributes: pestName (String)
+        Stores corn-related pests.
 
-   WheatPests:
-   Partition Key: pestId (String)
-   Attributes: pestName (String)
-   Stores wheat-related pests.
+    WheatPests:
+        Partition Key: pestId (String)
+        Attributes: pestName (String)
+        Stores wheat-related pests.
 
 8. Pages
 
