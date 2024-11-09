@@ -1,3 +1,25 @@
+👋 About Me
+
+    I’m a Java backend developer in training at BloomTech, with a passion for creating efficient and secure applications.
+    I hold a master’s degree in cybersecurity, giving me a unique perspective on integrating security best practices within backend development.
+    Currently focused on backend technologies, AWS, and implementing secure systems for agricultural tech.
+
+🛠️ Skills & Expertise
+
+    Programming Languages: Java, SQL
+    Frameworks & Tools: Spring Boot, Docker, AWS Lambda, Git
+    Specialization: Backend development, secure coding practices, cloud integration
+
+📬 Contact
+
+Feel free to reach out with questions or collaboration opportunities!
+
+    Email: guncho@gmail.com
+    LinkedIn: https://www.linkedin.com/in/eduardo-lowensohn-8285451b/
+
+Happy coding, and thank you for visiting the Crop Pest Management System repository!
+
+
 # Learn and Be Curious Project Files
 
 Welcome to your Learn and Be Curious Project Repository! As you already know, Learn and Be Curious is a unique experience from your other sprints here at Bloomtech. The most significant difference is that instead of being given a partially built project with mastery tasks that you need to complete, you will be creating a project from scratch, putting it onto AWS, and presenting your work.
@@ -41,3 +63,6 @@ If you are working with a team, you must complete a team charter. This document 
 #### [Reflection](project_documents/reflection.md)
 
 You will complete your reflection in Canvas, but feel free to see what questions we may ask here.
+
+
+
